@@ -16,6 +16,14 @@ await mkdir(targetDocs, {recursive: true});
 await cp(resolve(sourceDocs, 'user'), resolve(targetDocs, 'user'), {recursive: true});
 await cp(resolve(sourceDocs, 'reference'), resolve(targetDocs, 'reference'), {recursive: true});
 await cp(resolve(sourceDocs, 'README.md'), resolve(targetDocs, 'index.md'));
+const migrationIndex = resolve(targetDocs, 'user/migration/README.md');
+if (existsSync(migrationIndex)) {
+  const migrationSource = await readFile(migrationIndex, 'utf8');
+  await writeFile(migrationIndex, migrationSource
+    .replace('Classify each Mapper method before migrating it.', 'Classify each Mapper method before migrating it.\n\nFor project-wide or ambiguous changes, start with the [migration skill](/docs/user/migration/using-migration-skill).')
+    .replace('](from-mybatis.md)', '](/docs/user/migration/from-mybatis)')
+    .replace('](using-migration-skill.md)', '](/docs/user/migration/using-migration-skill)'));
+}
 await writeFile(resolve(targetDocs, 'index.md'), `---
 sidebar_position: 1
 title: Documentation
@@ -31,11 +39,19 @@ LiteORM generates ordinary Java Mapper implementations at compile time and execu
 
 The compiler owns stable decisions—SQL validation, parameter planning, dynamic SQL compilation, and result-shape checks. The generated Mapper then calls SqlExecutor, while JDBC connection, statement, mapping, and cleanup remain visible at runtime.
 
-## See the difference
+## Why teams choose LiteORM
 
-This short comparison shows how LiteORM keeps the execution path explicit compared with a session-and-proxy based mapper.
+LiteORM keeps the programming model small while moving stable work to compilation. The result is a runtime path that is easier to inspect, test, and operate.
 
-![LiteORM and MyBatis execution flow comparison](/assets/liteorm-vs-mybatis-flow-en.gif)
+| Concern | LiteORM approach | Practical benefit |
+| --- | --- | --- |
+| SQL validation | Annotation processing and javac diagnostics | Find invalid statements and signatures before deployment |
+| Mapper dispatch | Generated Java implementations | No runtime proxy lookup on the request path |
+| Type handling | Compile-time parameter and result planning | Fewer surprises from implicit conversions |
+| Object mapping | Generated assemblers and typed row mappers | Readable code with explicit construction rules |
+| Dynamic SQL | Supported expressions compiled into Java control flow | No runtime expression interpreter is required |
+| Extension model | Narrow providers, binders, row mappers, and interceptors | Extend one responsibility without replacing the lifecycle |
+| DataSource ownership | One Mapper belongs to one DataSource domain | Routing and transaction boundaries remain unambiguous |
 
 ## Choose your path
 
@@ -63,7 +79,7 @@ Connect named Mapper packages to DataSource domains and participate in Spring tr
 
 This chapter covers Mapper scanning, package-to-DataSource bindings, transactions, and routing boundaries.
 
-### Migrate from MyBatis
+### Migrate existing Mappers
 
 Map supported patterns deliberately, understand compatibility boundaries, and identify cases that need an explicit extension.
 
@@ -76,7 +92,7 @@ This chapter classifies supported patterns, deliberate non-goals, and explicit e
 - [Core guides](/docs/user/core)
 - [Reference contracts](/docs/reference/core-contract)
 - [Spring and extension contracts](/docs/reference/extensions)
-- [MyBatis compatibility matrix](/docs/reference/mybatis-compatibility)
+- [Compatibility matrix](/docs/reference/mybatis-compatibility)
 
 ## How the chapters fit together
 
@@ -85,7 +101,7 @@ This chapter classifies supported patterns, deliberate non-goals, and explicit e
 | User guides | Install, model, integrate, and migrate | [Start here](/docs/user) |
 | Core reference | Mapper contracts and JDBC behavior | [Read the core contract](/docs/reference/core-contract) |
 | Extensions | Providers, binders, row mappers, and interceptors | [Choose an extension](/docs/reference/extensions) |
-| Compatibility | What translates from MyBatis and what does not | [Check compatibility](/docs/reference/mybatis-compatibility) |
+| Compatibility | Supported patterns and explicit boundaries | [Check the matrix](/docs/reference/mybatis-compatibility) |
 
 ## Documentation principles
 
@@ -124,7 +140,8 @@ async function rewriteLinks(directory) {
         const repositoryPath = docsRelative.startsWith('../')
           ? docsRelative.replace(/^(\.\.\/)+/, '')
           : `docs/${docsRelative}`;
-        return `](https://github.com/lite-orm/lite-orm/blob/main/${repositoryPath}${anchor ? `#${anchor}` : ''})`;
+        const sitePath = repositoryPath.replace(/^docs\//, '/docs/').replace(/\/README$/, '');
+        return `](${sitePath}${anchor ? `#${anchor}` : ''})`;
       });
       if (rewritten !== source) await writeFile(path, rewritten);
     }
