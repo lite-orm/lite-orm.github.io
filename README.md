@@ -1,6 +1,21 @@
-# Website
+# LiteORM documentation site
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The site is built with Astro and Starlight and deployed by GitHub Actions to GitHub Pages.
+The `lite-orm` code repository is the single canonical owner of technical Markdown.
+This repository owns only presentation, navigation, theme, and build configuration.
+The workflow checks out the selected ref and builds a Pages artifact without committing
+the generated documentation mirror.
+
+## Cross-repository access
+
+The `lite-orm` source repository is public. The workflow checks it out directly at the
+selected branch, tag, or commit; no repository secret is required for documentation sync.
+
+## Machine-readable documentation
+
+The build publishes `/llms.txt` as a concise index and `/llms-full.txt` as a generated
+plain-text mirror for search and AI agents. These files are derived artifacts; edit the
+canonical Markdown in `lite-orm` instead.
 
 ## Installation
 
@@ -24,20 +39,8 @@ This command starts a local development server and opens up a browser window. Mo
 npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+This command generates static content into the `dist` directory and can be served using any static contents hosting service.
 
 ## Deployment
 
-Using SSH:
-
-```bash
-USE_SSH=true npm run deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+GitHub Actions uploads `dist/` as a Pages artifact and deploys it with the official Pages actions.

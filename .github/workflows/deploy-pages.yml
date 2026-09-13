@@ -35,6 +35,16 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify canonical example
+        working-directory: lite-orm-source
+        run: |
+          mvn -pl lite-orm-processor -am -DskipTests install
+          mvn -pl lite-orm-examples/basic-mapper -am -DskipTests compile
       - run: npm ci
       - name: Build static site
         env:
@@ -43,7 +53,7 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: dist
 
   deploy:
     needs: build
