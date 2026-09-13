@@ -27,13 +27,13 @@ export default function Home(): ReactNode {
         <section className={styles.hero}>
           <div className="container">
             <p className={styles.eyebrow}>JAVA · JDBC · COMPILE-TIME</p>
-            <Heading as="h1">SQL mapping that stays visible.</Heading>
+            <Heading as="h1">lite-orm</Heading>
             <p className={styles.lead}>
-              LiteORM generates ordinary Java Mappers at compile time, then executes them through a fixed, explicit JDBC lifecycle.
+              Compile-time SQL mapping for explicit Java and JDBC systems.
             </p>
             <div className={styles.buttons}>
-              <Link className="button button--primary button--lg" to="/docs/user/getting-started">Get started</Link>
-              <Link className="button button--secondary button--lg" to="/docs/user/architecture">Explore the architecture</Link>
+              <Link className="button button--primary button--lg" to="/docs/user/getting-started">Quick Start</Link>
+              <Link className="button button--secondary button--lg" href="https://github.com/lite-orm/lite-orm">View on GitHub</Link>
             </div>
             <div className={styles.codePanel}>
               <span className={styles.codeLabel}>A Mapper becomes ordinary Java</span>
