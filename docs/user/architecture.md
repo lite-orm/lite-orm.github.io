@@ -1,0 +1,34 @@
+# Architecture
+
+LiteORM moves stable Mapper knowledge to compilation and keeps physical JDBC work in one explicit runtime lifecycle.
+
+![LiteORM compile-time and runtime architecture](/assets/liteorm-architecture.svg)
+
+The editable source is stored beside the published image as [`liteorm-architecture.excalidraw`](https://github.com/lite-orm/lite-orm/blob/main/docs/assets/liteorm-architecture.excalidraw).
+
+## Compilation
+
+The `lite-orm-processor` artifact validates Mapper methods, selects SQL sources, compiles supported
+dynamic SQL, plans parameters and result mapping, and generates ordinary Java implementations.
+`lite-orm-core` is the runtime artifact consumed by generated source. Generated dynamic methods keep
+native Java branches and loops visible while using one `BoundSqlBuilder` to own SQL spacing, clause
+normalization, and aligned placeholder routing. The builder is a generated-code/runtime seam rather
+than an application query DSL. Invalid signatures, unsupported expressions, ambiguous mappings, and
+malformed XML fail during compilation whenever javac can identify the location.
+
+## Runtime
+
+Generated Mappers retain immutable statement definitions and bind only each invocation's SQL parameter values into execution plans before calling `SqlExecutor`. Fixed SQL, statement identity, options, JDBC routing, and result assembly live in generated `QueryDefinition`, `CommandDefinition`, or `BatchDefinition` fields instead of being rebuilt on every call. Standard SELECT methods use a typed `QueryExecutionPlan<T>` whose generated result assembler performs direct object construction and setter calls after Core JDBC value conversion. `JdbcSqlExecutor` owns statement preparation, parameter binding, execution, result reading and assembly, cleanup, and final observation. Runtime code does not load Mapper XML, evaluate OGNL, dispatch through Mapper proxies, or discover handlers.
+
+## Host Integrations
+
+Standalone and Spring applications use the same generated Mapper and `JdbcSqlExecutor` path. They differ only in assembly, connection participation, transaction ownership, and Mapper instance registration.
+
+- [Standalone JDBC](https://github.com/lite-orm/lite-orm/blob/main/docs/user/core/standalone.md) uses `JdbcAssembly` and callback transactions.
+- [Spring Boot](https://github.com/lite-orm/lite-orm/blob/main/docs/user/spring/spring-boot.md) owns IoC, named DataSource binding, and transaction boundaries.
+
+One Mapper belongs to one DataSource domain. Applications with several DataSources use disjoint Mapper packages and independent executor graphs.
+
+![Animated comparison of the LiteORM and MyBatis lifecycles](/assets/liteorm-vs-mybatis-flow-en.gif)
+
+The durable architectural principles and non-goals are defined in [Design Philosophy](https://github.com/lite-orm/lite-orm/blob/main/Design-Philosophy.md). Normative behavior is defined in the [Core contract](https://github.com/lite-orm/lite-orm/blob/main/docs/reference/core-contract.md).

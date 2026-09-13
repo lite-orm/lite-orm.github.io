@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#123d63"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1010" cy="120" r="240" fill="#1878d1" opacity=".22"/>
+  <text x="90" y="250" fill="#70d7ff" font-family="Arial, sans-serif" font-size="34" letter-spacing="9">JAVA · JDBC · COMPILE-TIME</text>
+  <text x="90" y="370" fill="#f8fbff" font-family="Arial, sans-serif" font-size="94" font-weight="700">LiteORM</text>
+  <text x="94" y="435" fill="#c7d9ea" font-family="Arial, sans-serif" font-size="30">SQL mapping that stays visible.</text>
+</svg>

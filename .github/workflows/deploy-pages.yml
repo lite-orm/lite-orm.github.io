@@ -1,0 +1,56 @@
+name: Deploy documentation site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      liteorm_ref:
+        description: LiteORM branch, tag, or commit to document
+        required: true
+        default: main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site source
+        uses: actions/checkout@v4
+      - name: Checkout LiteORM documentation source
+        uses: actions/checkout@v4
+        with:
+          repository: lite-orm/lite-orm
+          ref: ${{ inputs.liteorm_ref || 'main' }}
+          path: lite-orm-source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build static site
+        env:
+          LITEORM_SOURCE_DIR: ${{ github.workspace }}/lite-orm-source
+        run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

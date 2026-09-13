@@ -1,0 +1,21 @@
+# LiteORM documentation
+
+Canonical technical documentation is maintained in the LiteORM source repository.
+Pages are static, versioned, and intended for people and AI agents.
+
+- [LiteORM Documentation](https://lite-orm.github.io/docs/index)
+- [LiteORM Core GA Contract](https://lite-orm.github.io/docs/reference/core-contract)
+- [Extension Contracts](https://lite-orm.github.io/docs/reference/extensions)
+- [MyBatis Compatibility](https://lite-orm.github.io/docs/reference/mybatis-compatibility)
+- [Architecture](https://lite-orm.github.io/docs/user/architecture)
+- [Choosing an Extension](https://lite-orm.github.io/docs/user/core/extensions)
+- [Choosing a Value or Row Mapping](https://lite-orm.github.io/docs/user/core/mapping)
+- [Core Guides](https://lite-orm.github.io/docs/user/core/README)
+- [Standalone JDBC](https://lite-orm.github.io/docs/user/core/standalone)
+- [Quick Start](https://lite-orm.github.io/docs/user/getting-started)
+- [Migrating From MyBatis](https://lite-orm.github.io/docs/user/migration/from-mybatis)
+- [Migration Guides](https://lite-orm.github.io/docs/user/migration/README)
+- [Using The Migration Skill](https://lite-orm.github.io/docs/user/migration/using-migration-skill)
+- [LiteORM User Documentation](https://lite-orm.github.io/docs/user/README)
+- [Spring Guides](https://lite-orm.github.io/docs/user/spring/README)
+- [Spring Boot Integration](https://lite-orm.github.io/docs/user/spring/spring-boot)
