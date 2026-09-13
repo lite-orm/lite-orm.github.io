@@ -24,7 +24,17 @@ description: Learn LiteORM through task-oriented guides, architecture notes, and
 
 # LiteORM documentation
 
-LiteORM generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. This documentation is organized around the work you need to do: get running, understand the model, integrate with Spring, or migrate from MyBatis.
+LiteORM generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
+
+![LiteORM compile-time and runtime architecture](/assets/liteorm-architecture.svg)
+
+The compiler owns stable decisions—SQL validation, parameter planning, dynamic SQL compilation, and result-shape checks. The generated Mapper then calls SqlExecutor, while JDBC connection, statement, mapping, and cleanup remain visible at runtime.
+
+## See the difference
+
+This short comparison shows how LiteORM keeps the execution path explicit compared with a session-and-proxy based mapper.
+
+![LiteORM and MyBatis execution flow comparison](/assets/liteorm-vs-mybatis-flow-en.gif)
 
 ## Choose your path
 
@@ -34,11 +44,15 @@ Start with dependencies, annotation processing, a small Mapper, and explicit run
 
 [Quick start →](/docs/user/getting-started)
 
+This chapter covers dependencies, annotation processing, a first Mapper, and explicit runtime assembly.
+
 ### Understand the architecture
 
 See what moves to javac, what remains at runtime, and how generated code reaches JDBC.
 
 [Read the architecture guide →](/docs/user/architecture)
+
+This chapter explains compile-time generation, the generated source boundary, and the fixed JDBC lifecycle.
 
 ### Integrate with Spring Boot
 
@@ -46,11 +60,15 @@ Connect named Mapper packages to DataSource domains and participate in Spring tr
 
 [Open the Spring Boot guide →](/docs/user/spring/spring-boot)
 
+This chapter covers Mapper scanning, package-to-DataSource bindings, transactions, and routing boundaries.
+
 ### Migrate from MyBatis
 
 Map supported patterns deliberately, understand compatibility boundaries, and identify cases that need an explicit extension.
 
 [Read the migration guide →](/docs/user/migration/from-mybatis)
+
+This chapter classifies supported patterns, deliberate non-goals, and explicit extension points.
 
 ## Go deeper
 
@@ -58,6 +76,15 @@ Map supported patterns deliberately, understand compatibility boundaries, and id
 - [Reference contracts](/docs/reference/core-contract)
 - [Spring and extension contracts](/docs/reference/extensions)
 - [MyBatis compatibility matrix](/docs/reference/mybatis-compatibility)
+
+## How the chapters fit together
+
+| Chapter | What you will learn | Best next step |
+| --- | --- | --- |
+| User guides | Install, model, integrate, and migrate | [Start here](/docs/user) |
+| Core reference | Mapper contracts and JDBC behavior | [Read the core contract](/docs/reference/core-contract) |
+| Extensions | Providers, binders, row mappers, and interceptors | [Choose an extension](/docs/reference/extensions) |
+| Compatibility | What translates from MyBatis and what does not | [Check compatibility](/docs/reference/mybatis-compatibility) |
 
 ## Documentation principles
 
