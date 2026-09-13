@@ -8,6 +8,7 @@ const config: Config = {
   favicon: 'img/favicon.ico',
   url: 'https://lite-orm.github.io',
   baseUrl: '/',
+  trailingSlash: false,
   organizationName: 'lite-orm',
   projectName: 'lite-orm.github.io',
   onBrokenLinks: 'throw',
@@ -62,6 +63,29 @@ const config: Config = {
     },
     prism: {theme: prismThemes.github, darkTheme: prismThemes.dracula},
   } satisfies Preset.ThemeConfig,
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'keywords',
+        content: 'Java SQL mapper, compile-time SQL, JDBC, MyBatis alternative, Spring Boot',
+      },
+    },
+    {
+      tagName: 'script',
+      attributes: {type: 'application/ld+json'},
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareSourceCode',
+        name: 'LiteORM',
+        description: 'Compile-time SQL mapping for explicit Java and JDBC systems.',
+        codeRepository: 'https://github.com/lite-orm/lite-orm',
+        programmingLanguage: 'Java',
+        license: 'https://www.apache.org/licenses/LICENSE-2.0',
+        url: 'https://lite-orm.github.io',
+      }),
+    },
+  ],
 };
 
 export default config;

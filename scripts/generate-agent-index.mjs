@@ -4,6 +4,7 @@ import {resolve, relative} from 'node:path';
 const siteRoot = resolve(import.meta.dirname, '..');
 const docsRoot = resolve(siteRoot, 'docs');
 const pages = [];
+const documents = [];
 
 async function visit(directory) {
   for (const entry of (await readdir(directory, {withFileTypes: true})).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -14,6 +15,7 @@ async function visit(directory) {
       const title = source.match(/^#\s+(.+)$/m)?.[1] ?? entry.name;
       const urlPath = relative(docsRoot, path).replace(/\\/g, '/').replace(/\.(md|mdx)$/, '');
       pages.push(`- [${title}](https://lite-orm.github.io/docs/${urlPath})`);
+      documents.push({path, title, urlPath, source});
     }
   }
 }
@@ -27,5 +29,19 @@ await writeFile(resolve(siteRoot, 'static/llms.txt'), [
   '',
   ...pages,
   '',
+].join('\n'));
+await writeFile(resolve(siteRoot, 'static/llms-full.txt'), [
+  '# LiteORM documentation (full text)',
+  '',
+  'This machine-readable mirror is generated from the canonical Markdown in https://github.com/lite-orm/lite-orm/tree/main/docs.',
+  'Use the linked HTML pages for navigation and the source repository for change history.',
+  '',
+  ...documents.flatMap(({title, urlPath, source}) => [
+    `## ${title}`,
+    `Source: https://lite-orm.github.io/docs/${urlPath}`,
+    '',
+    source.trim(),
+    '',
+  ]),
 ].join('\n'));
 console.log(`Generated agent index with ${pages.length} Markdown pages`);

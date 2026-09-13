@@ -1,4 +1,21 @@
-# Website
+# LiteORM documentation site
+
+The site is built with Docusaurus and deployed by GitHub Actions to GitHub Pages.
+User and reference Markdown remain canonical in the private `lite-orm` repository;
+the workflow checks out the selected ref and builds a Pages artifact without committing
+generated files.
+
+## Cross-repository access
+
+Because `lite-orm` is private, configure a repository secret named `LITEORM_READ_TOKEN`
+in this repository. It must be a fine-grained token that can read the LiteORM repository
+(Contents: read). The workflow uses it only for the documentation checkout.
+
+## Machine-readable documentation
+
+The build publishes `/llms.txt` as a concise index and `/llms-full.txt` as a generated
+plain-text mirror for search and AI agents. These files are derived artifacts; edit the
+canonical Markdown in `lite-orm` instead.
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 

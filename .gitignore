@@ -8,6 +8,7 @@
 /docs
 /static/assets
 /static/llms.txt
+/static/llms-full.txt
 
 # Generated files
 .docusaurus
