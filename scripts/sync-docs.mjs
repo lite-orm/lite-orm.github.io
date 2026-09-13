@@ -143,7 +143,13 @@ async function rewriteLinks(directory) {
         const sitePath = repositoryPath.replace(/^docs\//, '/docs/').replace(/\/README$/, '');
         return `](${sitePath}${anchor ? `#${anchor}` : ''})`;
       });
-      if (rewritten !== source) await writeFile(path, rewritten);
+      const normalized = rewritten
+        .replace(/\]\(\/docs\/assets\//g, '](/assets/')
+        .replace(/\]\(\/docs\/research\/([^)#]+)(#[^)]*)?\)/g, '](https://github.com/lite-orm/lite-orm/blob/main/docs/research/$1$2)')
+        .replace(/\]\((\/docs)\/README(?:\.md)?(#[^)]*)?\)/g, ']($1$2)')
+        .replace(/\]\((\/docs\/[^)#]+)\/README\.md(#[^)]*)?\)/g, ']($1$2)')
+        .replace(/\]\((\/docs\/[^)#]+)\.md(#[^)]*)?\)/g, ']($1$2)');
+      if (normalized !== source) await writeFile(path, normalized);
     }
   }
 }
