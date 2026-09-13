@@ -8,9 +8,8 @@ the generated documentation mirror.
 
 ## Cross-repository access
 
-Because `lite-orm` is private, configure a repository secret named `LITEORM_READ_TOKEN`
-in this repository. It must be a fine-grained token that can read the LiteORM repository
-(Contents: read). The workflow uses it only for the documentation checkout.
+The `lite-orm` source repository is public. The workflow checks it out directly at the
+selected branch, tag, or commit; no repository secret is required for documentation sync.
 
 ## Machine-readable documentation
 

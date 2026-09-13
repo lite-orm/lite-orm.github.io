@@ -31,8 +31,6 @@ jobs:
           repository: lite-orm/lite-orm
           ref: ${{ inputs.liteorm_ref || 'main' }}
           path: lite-orm-source
-          # lite-orm is private; use a repository secret with read-only access.
-          token: ${{ secrets.LITEORM_READ_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22

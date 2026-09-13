@@ -46,6 +46,8 @@ The compiler owns stable decisions—SQL validation, parameter planning, dynamic
 
 LiteORM keeps the programming model small while moving stable work to compilation. The result is a runtime path that is easier to inspect, test, and operate.
 
+### Capability overview
+
 | Concern | LiteORM approach | Practical benefit |
 | --- | --- | --- |
 | SQL validation | Annotation processing and javac diagnostics | Find invalid statements and signatures before deployment |
