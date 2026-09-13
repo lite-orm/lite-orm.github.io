@@ -15,6 +15,7 @@ export default defineConfig({
       {label: 'Integrations', items: ['docs/user/spring', 'docs/user/spring/spring-boot']},
       {label: 'Migration', items: ['docs/user/migration', 'docs/user/migration/from-mybatis', 'docs/user/migration/using-migration-skill']},
       {label: 'Reference', items: ['docs/reference/core-contract', 'docs/reference/extensions', 'docs/reference/mybatis-compatibility']},
+      {label: 'Contribute', items: ['docs/contribute']},
     ],
     customCss: ['./src/styles/starlight.css'],
     editLink: {baseUrl: 'https://github.com/lite-orm/lite-orm/edit/main/docs/'},

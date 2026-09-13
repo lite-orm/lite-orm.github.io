@@ -16,6 +16,9 @@ await mkdir(targetDocs, {recursive: true});
 await cp(resolve(sourceDocs, 'user'), resolve(targetDocs, 'user'), {recursive: true});
 await cp(resolve(sourceDocs, 'reference'), resolve(targetDocs, 'reference'), {recursive: true});
 await cp(resolve(sourceDocs, 'README.md'), resolve(targetDocs, 'index.md'));
+if (existsSync(resolve(sourceDocs, 'contribute.md'))) {
+  await cp(resolve(sourceDocs, 'contribute.md'), resolve(targetDocs, 'contribute.md'));
+}
 const migrationIndex = resolve(targetDocs, 'user/migration/README.md');
 if (existsSync(migrationIndex)) {
   const migrationSource = await readFile(migrationIndex, 'utf8');
