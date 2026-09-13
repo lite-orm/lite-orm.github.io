@@ -56,6 +56,20 @@ LiteORM keeps the programming model small while moving stable work to compilatio
 | Extension model | Narrow providers, binders, row mappers, and interceptors | Extend one responsibility without replacing the lifecycle |
 | DataSource ownership | One Mapper belongs to one DataSource domain | Routing and transaction boundaries remain unambiguous |
 
+### MySQL benchmark snapshot
+
+The following snapshot comes from the reproducible MySQL 8.4 JMH run documented in the [benchmark report](https://github.com/lite-orm/lite-orm/blob/main/docs/benchmarks/core-ga-baseline.md). Lower is better; values are microseconds per operation on a local container, not a production latency promise.
+
+| Workload | Direct JDBC | LiteORM | MyBatis |
+| --- | ---: | ---: | ---: |
+| Scalar query | 3,511 | 3,362 | 3,563 |
+| Record mapping | 3,404 | 3,423 | 3,580 |
+| JavaBean mapping | 3,623 | 3,207 | 3,611 |
+| Dynamic SQL | 3,370 | 3,499 | 3,758 |
+| Cursor, ten rows | 3,307 | 3,644 | 3,988 |
+
+The complete timing table, environment metadata, and reproduction command live in the benchmark report.
+
 ## Choose your path
 
 ### Build your first Mapper
