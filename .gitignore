@@ -4,6 +4,11 @@
 # Production
 /build
 
+# Synced from lite-orm during the build; the source repository is canonical.
+/docs
+/static/assets
+/static/llms.txt
+
 # Generated files
 .docusaurus
 .cache-loader
