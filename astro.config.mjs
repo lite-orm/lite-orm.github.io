@@ -10,12 +10,11 @@ export default defineConfig({
     defaultLocale: 'root',
     locales: {root: {label: 'English', lang: 'en'}, 'zh-CN': {label: '简体中文', lang: 'zh-CN'}},
     sidebar: [
-      {label: 'Start here', items: ['docs', 'docs/user/getting-started', 'docs/user/architecture']},
+      {label: 'Start here', items: ['docs', 'docs/user/getting-started', 'docs/user/architecture', 'docs/contribute']},
       {label: 'Core', items: ['docs/user/core', 'docs/user/core/mapping', 'docs/user/core/extensions', 'docs/user/core/standalone']},
       {label: 'Integrations', items: ['docs/user/spring', 'docs/user/spring/spring-boot']},
       {label: 'Migration', items: ['docs/user/migration', 'docs/user/migration/from-mybatis', 'docs/user/migration/using-migration-skill']},
       {label: 'Reference', items: ['docs/reference/core-contract', 'docs/reference/extensions', 'docs/reference/mybatis-compatibility']},
-      {label: 'Contribute', items: ['docs/contribute']},
     ],
     customCss: ['./src/styles/starlight.css'],
     editLink: {baseUrl: 'https://github.com/lite-orm/lite-orm/edit/main/docs/'},
