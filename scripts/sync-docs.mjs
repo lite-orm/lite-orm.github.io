@@ -5,7 +5,7 @@ import {dirname, relative, resolve} from 'node:path';
 const siteRoot = resolve(import.meta.dirname, '..');
 const sourceRoot = resolve(process.env.LITEORM_SOURCE_DIR ?? resolve(siteRoot, '../lite-orm'));
 const sourceDocs = resolve(sourceRoot, 'docs');
-const targetDocs = resolve(siteRoot, 'docs');
+const targetDocs = resolve(siteRoot, 'src/content/docs');
 
 if (!existsSync(sourceDocs)) {
   throw new Error(`LiteORM source docs not found at ${sourceDocs}. Set LITEORM_SOURCE_DIR.`);
@@ -20,6 +20,7 @@ await writeFile(resolve(targetDocs, 'index.md'), `---
 sidebar_position: 1
 title: Documentation
 description: Learn LiteORM through task-oriented guides, architecture notes, and stable reference contracts.
+slug: docs
 ---
 
 # LiteORM documentation
@@ -91,7 +92,15 @@ This chapter classifies supported patterns, deliberate non-goals, and explicit e
 The source repository owns the canonical technical Markdown. This site adds navigation, search, bilingual presentation, stable URLs, and machine-readable indexes for people and AI agents.
 `);
 if (existsSync(resolve(sourceDocs, 'assets'))) {
-  await cp(resolve(sourceDocs, 'assets'), resolve(siteRoot, 'static/assets'), {recursive: true});
+  await cp(resolve(sourceDocs, 'assets'), resolve(siteRoot, 'public/assets'), {recursive: true});
+}
+if (existsSync(resolve(siteRoot, 'static/img'))) {
+  await cp(resolve(siteRoot, 'static/img'), resolve(siteRoot, 'public/img'), {recursive: true});
+}
+for (const filename of ['robots.txt', '.nojekyll']) {
+  if (existsSync(resolve(siteRoot, 'static', filename))) {
+    await cp(resolve(siteRoot, 'static', filename), resolve(siteRoot, 'public', filename));
+  }
 }
 
 async function rewriteLinks(directory) {
@@ -123,5 +132,23 @@ async function rewriteLinks(directory) {
 }
 
 await rewriteLinks(targetDocs);
+
+async function addStarlightFrontmatter(directory) {
+  for (const entry of await readdir(directory, {withFileTypes: true})) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) {
+      await addStarlightFrontmatter(path);
+    } else if (/\.(md|mdx)$/.test(entry.name) && path !== resolve(targetDocs, 'index.md')) {
+      const source = await readFile(path, 'utf8');
+      if (source.startsWith('---')) continue;
+      const relativePath = relative(targetDocs, path).replace(/\\/g, '/').replace(/\.(md|mdx)$/, '');
+      const slugPath = relativePath.endsWith('/README') ? relativePath.slice(0, -'/README'.length) : relativePath;
+      const title = source.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? entry.name.replace(/\.(md|mdx)$/, '');
+      await writeFile(path, `---\ntitle: ${title.replace(/[:#]/g, '')}\nslug: docs/${slugPath}\n---\n\n${source}`);
+    }
+  }
+}
+
+await addStarlightFrontmatter(targetDocs);
 
 console.log(`Synced canonical LiteORM Markdown from ${sourceRoot}`);

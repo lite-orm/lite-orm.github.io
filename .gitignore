@@ -2,17 +2,24 @@
 /node_modules
 
 # Production
-/build
+/dist
 
-# Synced from lite-orm during the build; the source repository is canonical.
+# Legacy/generated output from the former Docusaurus setup.
+/build
 /docs
 /static/assets
 /static/llms.txt
 /static/llms-full.txt
 
+# Synced from lite-orm during the build; the source repository is canonical.
+/src/content/docs
+/public/assets
+/public/llms.txt
+/public/llms-full.txt
+
 # Generated files
+.astro
 .docusaurus
-.cache-loader
 
 # Misc
 .DS_Store

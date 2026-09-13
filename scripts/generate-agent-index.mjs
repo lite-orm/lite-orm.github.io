@@ -2,7 +2,7 @@ import {readdir, readFile, writeFile} from 'node:fs/promises';
 import {resolve, relative} from 'node:path';
 
 const siteRoot = resolve(import.meta.dirname, '..');
-const docsRoot = resolve(siteRoot, 'docs');
+const docsRoot = resolve(siteRoot, 'src/content/docs');
 const pages = [];
 const documents = [];
 
@@ -21,7 +21,7 @@ async function visit(directory) {
 }
 
 await visit(docsRoot);
-await writeFile(resolve(siteRoot, 'static/llms.txt'), [
+await writeFile(resolve(siteRoot, 'public/llms.txt'), [
   '# LiteORM documentation',
   '',
   'Canonical technical documentation is maintained in the LiteORM source repository.',
@@ -30,7 +30,7 @@ await writeFile(resolve(siteRoot, 'static/llms.txt'), [
   ...pages,
   '',
 ].join('\n'));
-await writeFile(resolve(siteRoot, 'static/llms-full.txt'), [
+await writeFile(resolve(siteRoot, 'public/llms-full.txt'), [
   '# LiteORM documentation (full text)',
   '',
   'This machine-readable mirror is generated from the canonical Markdown in https://github.com/lite-orm/lite-orm/tree/main/docs.',

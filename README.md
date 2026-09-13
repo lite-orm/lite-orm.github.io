@@ -1,6 +1,6 @@
 # LiteORM documentation site
 
-The site is built with Docusaurus and deployed by GitHub Actions to GitHub Pages.
+The site is built with Astro and Starlight and deployed by GitHub Actions to GitHub Pages.
 User and reference Markdown remain canonical in the private `lite-orm` repository;
 the workflow checks out the selected ref and builds a Pages artifact without committing
 generated files.
