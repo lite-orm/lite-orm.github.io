@@ -1,5 +1,10 @@
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
+import {existsSync} from 'node:fs';
+import {resolve} from 'node:path';
+
+const sourceRoot = resolve(process.env.LITEORM_SOURCE_DIR ?? resolve(import.meta.dirname, '../lite-orm'));
+const contributeItem = existsSync(resolve(sourceRoot, 'docs/contribute.md')) ? ['docs/contribute'] : [];
 
 export default defineConfig({
   site: 'https://lite-orm.github.io',
@@ -10,7 +15,7 @@ export default defineConfig({
     defaultLocale: 'root',
     locales: {root: {label: 'English', lang: 'en'}, 'zh-CN': {label: '简体中文', lang: 'zh-CN'}},
     sidebar: [
-      {label: 'Start here', items: ['docs', 'docs/user/getting-started', 'docs/user/architecture', 'docs/contribute']},
+      {label: 'Start here', items: ['docs', 'docs/user/getting-started', 'docs/user/architecture', ...contributeItem]},
       {label: 'Core', items: ['docs/user/core', 'docs/user/core/mapping', 'docs/user/core/extensions', 'docs/user/core/standalone']},
       {label: 'Integrations', items: ['docs/user/spring', 'docs/user/spring/spring-boot']},
       {label: 'Migration', items: ['docs/user/migration', 'docs/user/migration/from-mybatis', 'docs/user/migration/using-migration-skill']},
