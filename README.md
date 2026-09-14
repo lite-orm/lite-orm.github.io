@@ -1,21 +1,21 @@
-# LiteORM documentation site
+# Kervix documentation site
 
 The site is built with Astro and Starlight and deployed by GitHub Actions to GitHub Pages.
-The `lite-orm` code repository is the single canonical owner of technical Markdown.
+The `kervix` code repository is the single canonical owner of technical Markdown.
 This repository owns only presentation, navigation, theme, and build configuration.
 The workflow checks out the selected ref and builds a Pages artifact without committing
 the generated documentation mirror.
 
 ## Cross-repository access
 
-The `lite-orm` source repository is public. The workflow checks it out directly at the
+The `kervix` source repository is public. The workflow checks it out directly at the
 selected branch, tag, or commit; no repository secret is required for documentation sync.
 
 ## Machine-readable documentation
 
 The build publishes `/llms.txt` as a concise index and `/llms-full.txt` as a generated
 plain-text mirror for search and AI agents. These files are derived artifacts; edit the
-canonical Markdown in `lite-orm` instead.
+canonical Markdown in `kervix` instead.
 
 ## Installation
 

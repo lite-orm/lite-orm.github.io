@@ -11,7 +11,7 @@
 /static/llms.txt
 /static/llms-full.txt
 
-# Synced from lite-orm during the build; the source repository is canonical.
+# Synced from kervix during the build; the source repository is canonical.
 /src/content/docs
 /public/assets
 /public/llms.txt

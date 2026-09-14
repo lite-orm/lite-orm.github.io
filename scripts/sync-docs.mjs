@@ -3,12 +3,14 @@ import {existsSync} from 'node:fs';
 import {dirname, relative, resolve} from 'node:path';
 
 const siteRoot = resolve(import.meta.dirname, '..');
-const sourceRoot = resolve(process.env.LITEORM_SOURCE_DIR ?? resolve(siteRoot, '../lite-orm'));
+// Keep the local checkout fallback stable; CI sets KERVIX_SOURCE_DIR explicitly
+// when the canonical source repository is checked out beside the site repo.
+const sourceRoot = resolve(process.env.KERVIX_SOURCE_DIR ?? resolve(siteRoot, '../lite-orm'));
 const sourceDocs = resolve(sourceRoot, 'docs');
 const targetDocs = resolve(siteRoot, 'src/content/docs');
 
 if (!existsSync(sourceDocs)) {
-  throw new Error(`LiteORM source docs not found at ${sourceDocs}. Set LITEORM_SOURCE_DIR.`);
+  throw new Error(`Kervix source docs not found at ${sourceDocs}. Set KERVIX_SOURCE_DIR.`);
 }
 
 await rm(targetDocs, {recursive: true, force: true});
@@ -30,25 +32,25 @@ if (existsSync(migrationIndex)) {
 await writeFile(resolve(targetDocs, 'index.md'), `---
 sidebar_position: 1
 title: Documentation
-description: Learn LiteORM through task-oriented guides, architecture notes, and stable reference contracts.
+description: Learn Kervix through task-oriented guides, architecture notes, and stable reference contracts.
 slug: docs
 ---
 
-# LiteORM documentation
+# Kervix documentation
 
-LiteORM generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
+Kervix generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
 
-![LiteORM compile-time and runtime architecture](/assets/liteorm-architecture.svg)
+![Kervix compile-time and runtime architecture](/assets/kervix-architecture.svg)
 
 The compiler owns stable decisions—SQL validation, parameter planning, dynamic SQL compilation, and result-shape checks. The generated Mapper then calls SqlExecutor, while JDBC connection, statement, mapping, and cleanup remain visible at runtime.
 
-## Why teams choose LiteORM
+## Why teams choose Kervix
 
-LiteORM keeps the programming model small while moving stable work to compilation. The result is a runtime path that is easier to inspect, test, and operate.
+Kervix keeps the programming model small while moving stable work to compilation. The result is a runtime path that is easier to inspect, test, and operate.
 
 ### Capability overview
 
-| Concern | LiteORM approach | Practical benefit |
+| Concern | Kervix approach | Practical benefit |
 | --- | --- | --- |
 | SQL validation | Annotation processing and javac diagnostics | Find invalid statements and signatures before deployment |
 | Mapper dispatch | Generated Java implementations | No runtime proxy lookup on the request path |
@@ -60,9 +62,9 @@ LiteORM keeps the programming model small while moving stable work to compilatio
 
 ### MySQL benchmark snapshot
 
-The following snapshot comes from the reproducible MySQL 8.4 JMH run documented in the [benchmark report](https://github.com/lite-orm/lite-orm/blob/main/docs/benchmarks/core-ga-baseline.md). Lower is better; values are microseconds per operation on a local container, not a production latency promise.
+The following snapshot comes from the reproducible MySQL 8.4 JMH run documented in the [benchmark report](https://github.com/kervix/kervix/blob/main/docs/benchmarks/core-ga-baseline.md). Lower is better; values are microseconds per operation on a local container, not a production latency promise.
 
-| Workload | Direct JDBC | LiteORM | MyBatis |
+| Workload | Direct JDBC | Kervix | MyBatis |
 | --- | ---: | ---: | ---: |
 | Scalar query | 3,511 | 3,362 | 3,563 |
 | Record mapping | 3,404 | 3,423 | 3,580 |
@@ -164,7 +166,7 @@ async function rewriteLinks(directory) {
       });
       const normalized = rewritten
         .replace(/\]\(\/docs\/assets\//g, '](/assets/')
-        .replace(/\]\(\/docs\/research\/([^)#]+)(#[^)]*)?\)/g, '](https://github.com/lite-orm/lite-orm/blob/main/docs/research/$1$2)')
+        .replace(/\]\(\/docs\/research\/([^)#]+)(#[^)]*)?\)/g, '](https://github.com/kervix/kervix/blob/main/docs/research/$1$2)')
         .replace(/\]\((\/docs)\/README(?:\.md)?(#[^)]*)?\)/g, ']($1$2)')
         .replace(/\]\((\/docs\/[^)#]+)\/README\.md(#[^)]*)?\)/g, ']($1$2)')
         .replace(/\]\((\/docs\/[^)#]+)\.md(#[^)]*)?\)/g, ']($1$2)');
@@ -193,4 +195,4 @@ async function addStarlightFrontmatter(directory) {
 
 await addStarlightFrontmatter(targetDocs);
 
-console.log(`Synced canonical LiteORM Markdown from ${sourceRoot}`);
+console.log(`Synced canonical Kervix Markdown from ${sourceRoot}`);

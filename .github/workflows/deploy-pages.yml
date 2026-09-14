@@ -5,8 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
-      liteorm_ref:
-        description: LiteORM branch, tag, or commit to document
+      kervix_ref:
+        description: Kervix branch, tag, or commit to document
         required: true
         default: main
 
@@ -25,12 +25,12 @@ jobs:
     steps:
       - name: Checkout site source
         uses: actions/checkout@v4
-      - name: Checkout LiteORM documentation source
+      - name: Checkout Kervix documentation source
         uses: actions/checkout@v4
         with:
-          repository: lite-orm/lite-orm
-          ref: ${{ inputs.liteorm_ref || 'main' }}
-          path: lite-orm-source
+          repository: kervix/kervix
+          ref: ${{ inputs.kervix_ref || 'main' }}
+          path: kervix-source
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -41,14 +41,14 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Verify canonical example
-        working-directory: lite-orm-source
+        working-directory: kervix-source
         run: |
-          mvn -pl lite-orm-processor -am -DskipTests install
-          mvn -pl lite-orm-examples/basic-mapper -am -DskipTests compile
+          mvn -pl kervix-processor -am -DskipTests install
+          mvn -pl kervix-examples/basic-mapper -am -DskipTests compile
       - run: npm ci
       - name: Build static site
         env:
-          LITEORM_SOURCE_DIR: ${{ github.workspace }}/lite-orm-source
+          KERVIX_SOURCE_DIR: ${{ github.workspace }}/kervix-source
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
