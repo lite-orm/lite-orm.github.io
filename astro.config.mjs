@@ -3,7 +3,7 @@ import starlight from '@astrojs/starlight';
 import {existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
-const sourceRoot = resolve(process.env.LYNXUS_SOURCE_DIR ?? resolve(import.meta.dirname, '../lite-orm'));
+const sourceRoot = resolve(process.env.LYNXUS_SOURCE_DIR ?? resolve(import.meta.dirname, '../lynxus'));
 const contributeItem = existsSync(resolve(sourceRoot, 'docs/contribute.md')) ? ['docs/contribute'] : [];
 
 export default defineConfig({

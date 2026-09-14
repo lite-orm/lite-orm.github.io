@@ -5,7 +5,7 @@ import {dirname, relative, resolve} from 'node:path';
 const siteRoot = resolve(import.meta.dirname, '..');
 // Keep the local checkout fallback stable; CI sets LYNXUS_SOURCE_DIR explicitly
 // when the canonical source repository is checked out beside the site repo.
-const sourceRoot = resolve(process.env.LYNXUS_SOURCE_DIR ?? resolve(siteRoot, '../lite-orm'));
+const sourceRoot = resolve(process.env.LYNXUS_SOURCE_DIR ?? resolve(siteRoot, '../lynxus'));
 const sourceDocs = resolve(sourceRoot, 'docs');
 const targetDocs = resolve(siteRoot, 'src/content/docs');
 
