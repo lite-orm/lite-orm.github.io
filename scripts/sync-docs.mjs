@@ -3,14 +3,14 @@ import {existsSync} from 'node:fs';
 import {dirname, relative, resolve} from 'node:path';
 
 const siteRoot = resolve(import.meta.dirname, '..');
-// Keep the local checkout fallback stable; CI sets KERVIX_SOURCE_DIR explicitly
+// Keep the local checkout fallback stable; CI sets LYNXUS_SOURCE_DIR explicitly
 // when the canonical source repository is checked out beside the site repo.
-const sourceRoot = resolve(process.env.KERVIX_SOURCE_DIR ?? resolve(siteRoot, '../lite-orm'));
+const sourceRoot = resolve(process.env.LYNXUS_SOURCE_DIR ?? resolve(siteRoot, '../lynxus'));
 const sourceDocs = resolve(sourceRoot, 'docs');
 const targetDocs = resolve(siteRoot, 'src/content/docs');
 
 if (!existsSync(sourceDocs)) {
-  throw new Error(`Kervix source docs not found at ${sourceDocs}. Set KERVIX_SOURCE_DIR.`);
+  throw new Error(`Lynxus source docs not found at ${sourceDocs}. Set LYNXUS_SOURCE_DIR.`);
 }
 
 await rm(targetDocs, {recursive: true, force: true});
@@ -32,25 +32,25 @@ if (existsSync(migrationIndex)) {
 await writeFile(resolve(targetDocs, 'index.md'), `---
 sidebar_position: 1
 title: Documentation
-description: Learn Kervix through task-oriented guides, architecture notes, and stable reference contracts.
+description: Learn Lynxus through task-oriented guides, architecture notes, and stable reference contracts.
 slug: docs
 ---
 
-# Kervix documentation
+# Lynxus documentation
 
-Kervix generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
+Lynxus generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
 
-![Kervix compile-time and runtime architecture](/assets/kervix-architecture.svg)
+![Lynxus compile-time and runtime architecture](/assets/lynxus-architecture.svg)
 
 The compiler owns stable decisions—SQL validation, parameter planning, dynamic SQL compilation, and result-shape checks. The generated Mapper then calls SqlExecutor, while JDBC connection, statement, mapping, and cleanup remain visible at runtime.
 
-## Why teams choose Kervix
+## Why teams choose Lynxus
 
-Kervix keeps the programming model small while moving stable work to compilation. The result is a runtime path that is easier to inspect, test, and operate.
+Lynxus keeps the programming model small while moving stable work to compilation. The result is a runtime path that is easier to inspect, test, and operate.
 
 ### Capability overview
 
-| Concern | Kervix approach | Practical benefit |
+| Concern | Lynxus approach | Practical benefit |
 | --- | --- | --- |
 | SQL validation | Annotation processing and javac diagnostics | Find invalid statements and signatures before deployment |
 | Mapper dispatch | Generated Java implementations | No runtime proxy lookup on the request path |
@@ -62,9 +62,9 @@ Kervix keeps the programming model small while moving stable work to compilation
 
 ### MySQL benchmark snapshot
 
-The following snapshot comes from the reproducible MySQL 8.4 JMH run documented in the [benchmark report](https://github.com/kervix/kervix/blob/main/docs/benchmarks/core-ga-baseline.md). Lower is better; values are microseconds per operation on a local container, not a production latency promise.
+The following snapshot comes from the reproducible MySQL 8.4 JMH run documented in the [benchmark report](https://github.com/lynxus-project/lynxus/blob/main/docs/benchmarks/core-ga-baseline.md). Lower is better; values are microseconds per operation on a local container, not a production latency promise.
 
-| Workload | Direct JDBC | Kervix | MyBatis |
+| Workload | Direct JDBC | Lynxus | MyBatis |
 | --- | ---: | ---: | ---: |
 | Scalar query | 3,511 | 3,362 | 3,563 |
 | Record mapping | 3,404 | 3,423 | 3,580 |
@@ -166,7 +166,7 @@ async function rewriteLinks(directory) {
       });
       const normalized = rewritten
         .replace(/\]\(\/docs\/assets\//g, '](/assets/')
-        .replace(/\]\(\/docs\/research\/([^)#]+)(#[^)]*)?\)/g, '](https://github.com/kervix/kervix/blob/main/docs/research/$1$2)')
+        .replace(/\]\(\/docs\/research\/([^)#]+)(#[^)]*)?\)/g, '](https://github.com/lynxus-project/lynxus/blob/main/docs/research/$1$2)')
         .replace(/\]\((\/docs)\/README(?:\.md)?(#[^)]*)?\)/g, ']($1$2)')
         .replace(/\]\((\/docs\/[^)#]+)\/README\.md(#[^)]*)?\)/g, ']($1$2)')
         .replace(/\]\((\/docs\/[^)#]+)\.md(#[^)]*)?\)/g, ']($1$2)');
@@ -195,4 +195,4 @@ async function addStarlightFrontmatter(directory) {
 
 await addStarlightFrontmatter(targetDocs);
 
-console.log(`Synced canonical Kervix Markdown from ${sourceRoot}`);
+console.log(`Synced canonical Lynxus Markdown from ${sourceRoot}`);

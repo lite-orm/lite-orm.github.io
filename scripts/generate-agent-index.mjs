@@ -14,7 +14,7 @@ async function visit(directory) {
       const source = await readFile(path, 'utf8');
       const title = source.match(/^#\s+(.+)$/m)?.[1] ?? entry.name;
       const urlPath = relative(docsRoot, path).replace(/\\/g, '/').replace(/\.(md|mdx)$/, '');
-      pages.push(`- [${title}](https://kervix.github.io/docs/${urlPath})`);
+      pages.push(`- [${title}](https://lynxus-project.github.io/docs/${urlPath})`);
       documents.push({path, title, urlPath, source});
     }
   }
@@ -22,23 +22,23 @@ async function visit(directory) {
 
 await visit(docsRoot);
 await writeFile(resolve(siteRoot, 'public/llms.txt'), [
-  '# Kervix documentation',
+  '# Lynxus documentation',
   '',
-  'Canonical technical documentation is maintained in the Kervix source repository.',
+  'Canonical technical documentation is maintained in the Lynxus source repository.',
   'Pages are static, versioned, and intended for people and AI agents.',
   '',
   ...pages,
   '',
 ].join('\n'));
 await writeFile(resolve(siteRoot, 'public/llms-full.txt'), [
-  '# Kervix documentation (full text)',
+  '# Lynxus documentation (full text)',
   '',
-  'This machine-readable mirror is generated from the canonical Markdown in https://github.com/kervix/kervix/tree/main/docs.',
+  'This machine-readable mirror is generated from the canonical Markdown in https://github.com/lynxus-project/lynxus/tree/main/docs.',
   'Use the linked HTML pages for navigation and the source repository for change history.',
   '',
   ...documents.flatMap(({title, urlPath, source}) => [
     `## ${title}`,
-    `Source: https://kervix.github.io/docs/${urlPath}`,
+    `Source: https://lynxus-project.github.io/docs/${urlPath}`,
     '',
     source.trim(),
     '',

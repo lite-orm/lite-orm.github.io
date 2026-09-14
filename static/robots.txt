@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kervix.github.io/sitemap.xml
+Sitemap: https://lynxus-project.github.io/sitemap.xml
