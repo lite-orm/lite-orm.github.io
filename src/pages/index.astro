@@ -14,32 +14,32 @@ const features = [
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Compile-time SQL mapping for explicit Java and JDBC systems." />
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
-    <title>kervix — Compile-time SQL mapping</title>
+    <title>Lynxus — A compile-time ORM for Java</title>
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="/"><span aria-hidden="true">⚡</span> kervix</a>
-      <nav><a href="/docs">Docs</a><a href="/docs/user/spring/spring-boot">Spring Boot</a><a href="https://github.com/kervix/kervix" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
+      <a class="brand" href="/"><span aria-hidden="true">⚡</span> Lynxus</a>
+      <nav><a href="/docs">Docs</a><a href="/docs/user/spring/spring-boot">Spring Boot</a><a href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
     </header>
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <div class="stack-tags" aria-label="Kervix technology stack"><span>JAVA</span><i>+</i><span>JDBC</span><i>+</i><span>COMPILE-TIME</span></div>
-          <h1>kervix</h1>
-          <p class="slogan">SQL mapping, made visible.</p>
-          <p class="lede">Generate readable Java Mappers at compile time, then execute them through one explicit JDBC lifecycle—from connection to cleanup.</p>
-          <div class="actions"><a class="button primary" href="/docs/user/getting-started/">Quick Start</a><a class="button ghost" href="https://github.com/kervix/kervix" target="_blank" rel="noopener noreferrer">View on GitHub</a></div>
+          <div class="stack-tags" aria-label="Lynxus technology stack"><span>JAVA</span><i>+</i><span>JDBC</span><i>+</i><span>COMPILE-TIME</span></div>
+          <h1>A compile-time ORM for Java.</h1>
+          <p class="slogan">AOT-first by design. Keep SQL explicit and JDBC execution visible.</p>
+          <p class="lede">Generate readable Java Mappers at compile time, then execute them through one explicit JDBC lifecycle, from connection to cleanup.</p>
+          <div class="actions"><a class="button primary" href="/docs/user/getting-started/">Quick Start</a><a class="button ghost" href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">View on GitHub</a></div>
         </div>
-        <div class="signal-card" aria-label="Kervix compile-time signal">
+        <div class="signal-card" aria-label="Lynxus compile-time signal">
           <div class="signal-glow"></div><div class="signal-orbit orbit-one"></div><div class="signal-orbit orbit-two"></div>
-          <div class="signal-core"><span>⚡</span><small>kervix</small></div>
+          <div class="signal-core"><span>⚡</span><small>Lynxus</small></div>
           <div class="signal-chip chip-top">COMPILE-TIME <b>✓</b></div><div class="signal-chip chip-right">Mapper.java</div><div class="signal-chip chip-bottom">JDBC lifecycle</div>
           <div class="signal-lines"><span></span><span></span><span></span></div>
         </div>
       </section>
       <section class="features"><p class="eyebrow">A SMALLER SURFACE AREA</p><h2>Make the SQL path obvious.</h2><div class="feature-grid">{features.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
-      <section class="comparison"><div><p class="eyebrow">SEE THE DIFFERENCE</p><h2>Generated code. Visible execution.</h2><p>Kervix moves stable mapping decisions to compile time and leaves connection, statement, mapping, and cleanup behavior explicit at runtime.</p><a href="/docs">Explore the architecture →</a></div><img src="/assets/kervix-vs-mybatis-flow-en.gif" alt="Kervix and MyBatis execution flow comparison" /></section>
+      <section class="proof"><div><p class="eyebrow">AOT-FIRST BY DESIGN</p><h2>Compile once. Run with visible JDBC.</h2><p>Lynxus generates ordinary Java Mapper implementations during compilation. Native Image consumers use the same generated code and explicit executor contract without runtime Mapper proxies or SQL interpreters.</p><a href="/docs/user/aot">Read the AOT guide →</a></div></section>
     </main>
-    <footer><span>⚡ kervix</span><span>Apache-2.0 · Built for explicit Java systems</span></footer>
+    <footer><span>⚡ Lynxus</span><span>Apache-2.0 · Built for explicit Java systems</span></footer>
   </body>
 </html>

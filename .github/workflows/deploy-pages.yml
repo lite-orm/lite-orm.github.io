@@ -5,8 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
-      kervix_ref:
-        description: Kervix branch, tag, or commit to document
+      lynxus_ref:
+        description: Lynxus branch, tag, or commit to document
         required: true
         default: main
 
@@ -25,12 +25,12 @@ jobs:
     steps:
       - name: Checkout site source
         uses: actions/checkout@v4
-      - name: Checkout Kervix documentation source
+      - name: Checkout Lynxus documentation source
         uses: actions/checkout@v4
         with:
-          repository: kervix/kervix
-          ref: ${{ inputs.kervix_ref || 'main' }}
-          path: kervix-source
+          repository: lynxus-project/lynxus
+          ref: ${{ inputs.lynxus_ref || 'main' }}
+          path: lynxus-source
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -41,14 +41,14 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Verify canonical example
-        working-directory: kervix-source
+        working-directory: lynxus-source
         run: |
-          mvn -pl kervix-processor -am -DskipTests install
-          mvn -pl kervix-examples/basic-mapper -am -DskipTests compile
+          mvn -pl lynxus-processor -am -DskipTests install
+          mvn -pl lynxus-examples/basic-mapper -am -DskipTests compile
       - run: npm ci
       - name: Build static site
         env:
-          KERVIX_SOURCE_DIR: ${{ github.workspace }}/kervix-source
+          LYNXUS_SOURCE_DIR: ${{ github.workspace }}/lynxus-source
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

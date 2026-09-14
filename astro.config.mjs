@@ -3,15 +3,15 @@ import starlight from '@astrojs/starlight';
 import {existsSync} from 'node:fs';
 import {resolve} from 'node:path';
 
-const sourceRoot = resolve(process.env.KERVIX_SOURCE_DIR ?? resolve(import.meta.dirname, '../lite-orm'));
+const sourceRoot = resolve(process.env.LYNXUS_SOURCE_DIR ?? resolve(import.meta.dirname, '../lite-orm'));
 const contributeItem = existsSync(resolve(sourceRoot, 'docs/contribute.md')) ? ['docs/contribute'] : [];
 
 export default defineConfig({
-  site: 'https://kervix.github.io',
+  site: 'https://lynxus-project.github.io',
   integrations: [starlight({
-    title: 'Kervix',
+    title: 'Lynxus',
     description: 'Compile-time SQL mapping for explicit Java and JDBC systems.',
-    social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/kervix/kervix'}],
+    social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/lynxus-project/lynxus'}],
     defaultLocale: 'root',
     locales: {root: {label: 'English', lang: 'en'}, 'zh-CN': {label: '简体中文', lang: 'zh-CN'}},
     sidebar: [
@@ -22,16 +22,16 @@ export default defineConfig({
       {label: 'Reference', items: ['docs/reference/core-contract', 'docs/reference/extensions', 'docs/reference/mybatis-compatibility']},
     ],
     customCss: ['./src/styles/starlight.css'],
-    editLink: {baseUrl: 'https://github.com/kervix/kervix/edit/main/docs/'},
+    editLink: {baseUrl: 'https://github.com/lynxus-project/lynxus/edit/main/docs/'},
     pagination: true,
     lastUpdated: true,
     head: [
       {tag: 'meta', attrs: {name: 'keywords', content: 'Java SQL mapper, compile-time SQL, JDBC, MyBatis alternative, Spring Boot'}},
       {tag: 'script', attrs: {type: 'application/ld+json'}, content: JSON.stringify({
-        '@context': 'https://schema.org', '@type': 'SoftwareSourceCode', name: 'Kervix',
+        '@context': 'https://schema.org', '@type': 'SoftwareSourceCode', name: 'Lynxus',
         description: 'Compile-time SQL mapping for explicit Java and JDBC systems.',
-        codeRepository: 'https://github.com/kervix/kervix', programmingLanguage: 'Java',
-        license: 'https://www.apache.org/licenses/LICENSE-2.0', url: 'https://kervix.github.io',
+        codeRepository: 'https://github.com/lynxus-project/lynxus', programmingLanguage: 'Java',
+        license: 'https://www.apache.org/licenses/LICENSE-2.0', url: 'https://lynxus-project.github.io',
       })},
     ],
   })],
