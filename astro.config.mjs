@@ -11,7 +11,7 @@ export default defineConfig({
   integrations: [starlight({
     title: 'Lynxus Docs',
     titleDelimiter: '-',
-    description: 'Compile-time Java ORM and SQL mapping for GraalVM Native Image, Spring Boot 3 AOT, and explicit JDBC systems.',
+    description: 'AOT-first compile-time Java ORM with explicit JDBC execution and a generated path suitable for GraalVM Native Image or Spring Boot AOT applications.',
     social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/lynxus-project/lynxus'}],
     defaultLocale: 'root',
     locales: {root: {label: 'English', lang: 'en'}, 'zh-CN': {label: '简体中文', lang: 'zh-CN'}},
@@ -27,7 +27,7 @@ export default defineConfig({
     pagination: true,
     lastUpdated: true,
     head: [
-      {tag: 'meta', attrs: {name: 'keywords', content: 'compile-time Java ORM, GraalVM Native Image Java ORM, MyBatis alternative compile-time, zero reflection JDBC Java, Spring Boot 3 AOT ORM, Lynxus'}},
+      {tag: 'meta', attrs: {name: 'keywords', content: 'compile-time Java ORM, GraalVM Native Image Java ORM, MyBatis alternative compile-time, zero reflection JDBC Java, Spring Boot AOT ORM, Lynxus'}},
       {tag: 'meta', attrs: {property: 'og:image', content: 'https://lynxus-project.github.io/img/lynxus-social-card.svg'}},
       {tag: 'meta', attrs: {property: 'og:image:type', content: 'image/svg+xml'}},
       {tag: 'meta', attrs: {property: 'og:image:width', content: '1200'}},
@@ -37,7 +37,7 @@ export default defineConfig({
       {tag: 'meta', attrs: {name: 'twitter:image:alt', content: 'Lynxus - Compile-time Java ORM. SQL mapping, made visible.'}},
       {tag: 'script', attrs: {type: 'application/ld+json'}, content: JSON.stringify({
         '@context': 'https://schema.org', '@type': 'SoftwareSourceCode', name: 'Lynxus',
-        description: 'Compile-time Java ORM and SQL mapping for GraalVM Native Image, Spring Boot 3 AOT, and explicit JDBC systems.',
+        description: 'AOT-first compile-time Java ORM with explicit JDBC execution and a generated path suitable for GraalVM Native Image or Spring Boot AOT applications.',
         codeRepository: 'https://github.com/lynxus-project/lynxus', programmingLanguage: 'Java',
         license: 'https://www.apache.org/licenses/LICENSE-2.0', url: 'https://lynxus-project.github.io',
         image: 'https://lynxus-project.github.io/img/lynxus-social-card.svg',
